@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Things I Helped People With - First Web Project</title>
+</head>
+<body style="font-family: Arial;">
+  <header>
+    <nav>
+      <ul>
+        <li><a href="./index.html">Back to ./index.html</a></li>
+        <li><a href="./images-and-frames.html">Here (./images-and-frames.html)</a></li>
+        <li><a href="./lists-and-tables.html">Lists and Tables section</a></li>
+        <li><a href="./forms.html">Apply for a j*b</a></li>
+        <li><a href="./was.html">Whack-A-Square</a></li>
+      </ul>
+    </nav>
+    <h1>Things I helped people with</h1>
+    <h2><i>Because I decided not to use them in my website for some reason</i></h2>
+  </header>
+  <main>
+    <p>I'm not quite sure why, but people have recently been coming to me for questions about HTML.</p>
+    <p>I mean, I feel honoured and happy that people are choosing me, but I'm not sure why or how people concluded to choose me as their support rather than the internet.</p>
+    <p>I would like to share what I've seen in these people's projects, so hopefully you can examine it and perhaps adapt your ways of teaching (<b>this is not personal</b>) slightly to accomodate to what these people did and didn't learn during your course.</p>
+    <!--
+      List:
+
+      - Inline fieldset
+      - Float: right fieldset
+      - Links
+      - Changing text colour
+      - Fancifying text
+      - Changing element colour
+      - How to properly make lists
+      - Making different list types
+      - Making inline lists
+      - Making proper radio buttons
+      - Radio names
+      - Borders
+      - Void and Non-Void tags
+      - General error checking
+      - INDENTATION
+    -->
+
+    <h3>Fieldsets</h3>
+
+    <fieldset style="display: inline; float: left; margin: 0px;">
+      <label>I've made an inline fieldset that changes its width according to your text's length.</label>
+    </fieldset>
+    <fieldset style="display: inline; float: left; margin: 0px;">
+      <label>As a result, I can also make fieldsets float alongside each other.</label>
+    </fieldset><br /><br /><br />
+
+    <h3>Links</h3>
+
+    <a href="./things-i-helped-with.html">This is how a link works. You use "href" to determine the file, not "src".</a><br />
+    <a href="./things-i-helped-with.html">And, you definitely, definitely don't put your link in the inner HTML, only in "href".</a><br />
+    <span id="fakelink" style="color: indigo; cursor: pointer;" onclick="alert('See?');" onmousedown="document.getElementById('fakelink').style.color = 'red';" onmouseup="document.getElementById('fakelink').style.color = 'indigo';" onmouseleave="document.getElementById('fakelink').style.color = 'indigo';"><u>Underlined text can also unfortunately be mistaken for hyprelinks, so people should try to avoid using the &lt;u&gt; tag.</u></span>
+    
+    <h3>Text Decoration</h3>
+    
+    <p>CSS is a great thing. People really want to decorate their websites right now, so I try to help others when they ask me.</p>
+    <p>I always tell people that they should focus on their main website first, but this seems to bother them more.</p>
+    <br />
+    <p>There is no direct way to change element colour in HTML, but you can incorporate the "style" attribute to specific tags rather than identifying it through the &lt;style&gt; tag.</p>
+    <p>You can use "color: <i>red</i>" (change the italic text to what colour you want).</p>
+
+    <p style="color: red;">Here is an example of this.</p>
+
+    <p>You can also make <span style="color: green;">coloured text</span> within paragraphs, like this.</p>
+
+    <br />
+    <p>This is how you make <b>bold text</b>.</p>
+    <p>This is how you make <i>italic text</i>.</p>
+    <p>You put these elements within dedicated text elements, but you should <b>never</b> put them by themselves.</p>
+    
+    <h3>Changing element colour</h3>
+    
+    <p>This has a similar but different process to changing text. Instead of "text-color" or "color", you use "background-color" or continue using "color".</p>
+
+    <div id="divexample" style="background-color: blue; color: white; border: 2px solid black; padding: 5px;">
+      <p>
+        Here is a coloured element.<br />
+        The &lt;div&gt; tag (not the &lt;p&gt; tag) uses "background-color: blue", and "color: white".
+      </p>
+    </div>
+
+    <p>The example above shows how to make coloured elements, evidently.</p>
+    <p>Sorry -- this element is pretty vibrant, and takes your eyes away from what you're trying to read. If this is a problem for you, feel free to press the button below to toggle its visibility.</p>
+    <button onclick="document.getElementById('divexample').hidden = !document.getElementById('divexample').hidden;">Toggle visibility</button><br />
+
+    <h3>Making <u>proper</u> lists</h3>
+
+    <p>I'm assuming you've seen this before, but some people <i>really</i> don't know how to program with lists, even with the &lt;ul&gt; tag.</p>
+
+    <ul>
+      <li>This is how you make a good and legitimate list.</li>
+      <li>It can have more than one item, of course. It wouldn't be much of a list otherwise.</li>
+      <li>Here's a third item. I don't know what else to type.</li>
+    </ul>
+
+    <p>Some people literally pasted the &bull; (&amp;bull;) icon into a &lt;p&gt; tag, then making multiple of those.</p>
+    <p>These people don't even use the entity name I showed, they literally paste "&bull;".</p>
+    <p>In my opinion, the list elements were especially explained very vaguely, so I would reccommend making more time for this section of HTML tags.</p>
+    <br />
+    <p>I've also shown some people that you can style your bullet points differently, like this:</p>
+    
+    <ul style="list-style-type: square;">
+      <li>Square item list</li>
+      <li>Second item</li>
+    </ul>
+    <ul style="list-style-type: disc;">
+      <li>Disc item list</li>
+      <li>Second item</li>
+    </ul>
+    <ol style="list-style-type: upper-roman">
+      <li>Upper Roman item list</li>
+      <li>Second item</li>
+    </ol>
+    <ol style="list-style-type: lower-alpha;">
+      <li>Lower Alpha item list</li>
+      <li>Second item</li>
+    </ol>
+
+    <p>I know that there's a specific HTML attribute for this, but I use CSS's "list-style-type" to change it, the options just seem harder to mistake.</p>
+    <br />
+    <p>Here's another neat thing you can do with lists, center their content <b>along with</b> the bullet points.</p>
+    <p>You can do this by using "text-align: center" on the parenting element, and then "display: inline-block" on the list itself.</p>
+    <p>Here is the result:</p>
+    
+    <div style="text-align: center;">
+      <ul style="display: inline-block;">
+        <li>This is a super-centered list.</li>
+        <li>Multiple CSS attributes must be applied for this to work.</li>
+        <li>Unfortunately, the points only go close to the largest field of text,</li>
+        <li>not the text itself.</li>
+      </ul>
+    </div>
+
+    <h3>Radio buttons</h3>
+
+    
+    
+  </main>
+  <footer>
+    <hr />
+    <a href="./index.html">Back to ./index.html</a>
+  </footer>
+</body>
+</html>

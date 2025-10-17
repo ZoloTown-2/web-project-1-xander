@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Black Jack - First Web Project</title>
+  <script>
+    const suits = {
+      CLUBS: 'Clubs',
+      DIAMONDS: 'Diamonds',
+      SPADES: 'Spades',
+      HEARTS: 'Hearts'
+    };
+    const decks = {
+      COMPUTER: 'Computer',
+      USER: 'User',
+      SPLIT: 'Split'
+    };
+    class Card {
+      val = 1;
+      suit = 'Clubs';
+      faceUp = true;
+      constructor(val, suit, faceUp) {
+        this.val = val;
+        this.suit = suit;
+        this.faceUp = faceUp;
+      }
+    }
+    let initDeck = [];
+    let deck = [];
+    let deckCount = 0;
+    let comdeck = [];
+    let cdid = [];
+    let plydeck = [];
+    let pdid = [];
+    let psdeck = [];
+    let psdid = [];
+    let comlegend;
+    let plylegend;
+    let pslegend;
+    let comcards;
+    let plycards;
+    let plysplit;
+    let pscards;
+    let ended = false;
+    let doubled = false;
+    let inSplit = false;
+    let splitting = false;
+    let comCardTotal = 0;
+    let plyCardTotal = 0;
+    let psCardTotal = 0;
+    let comStaying = false;
+    let plyStaying = false;
+    let psStaying = false;
+    let comDoubled = false;
+    let plyDoubled = false;
+    let psDoubled = false;
+    let barback;
+    let barfront;
+    let bet = 10;
+    let score = 0;
+    let buButton;
+    let bdButton;
+    let betDisplay;
+    let scoreDisplay;
+    let dealButton;
+    let hitButton;
+    let stayButton;
+    let doubleButton;
+    let splitButton;
+    let playing = false;
+    let ident = 0;
+    let turn = 1;
+    for (var i = 0; i < 52; i++) {
+      var val = (i % 13) + 1;
+      var suitNum = Math.floor(i / 13) + 1;
+      var suit;
+      switch (suitNum) {
+        case 1: {
+          suit = 'Clubs';
+          break;
+        }
+        case 2: {
+          suit = 'Diamonds';
+          break;
+        }
+        case 3: {
+          suit = 'Spades';
+          break;
+        }
+        case 4: {
+          suit = 'Hearts';
+          break;
+        }
+        default: {
+          console.error('Error reading number: ' + suitNum);
+          suit = 'Clubs';
+          break;
+        }
+      }
+      initDeck.push(new Card(val, suit, false));
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      comlegend = document.getElementById('comlegend');
+      plylegend = document.getElementById('plylegend');
+      pslegend = document.getElementById('pslegend');
+      comcards = document.getElementById('comcards');
+      plycards = document.getElementById('plycards');
+      plysplit = document.getElementById('plysplit');
+      pscards = document.getElementById('pscards');
+      barback = document.getElementById('barback');
+      barfront = document.getElementById('barfront');
+      buButton = document.getElementById('betup');
+      bdButton = document.getElementById('betdown');
+      betDisplay = document.getElementById('bet');
+      scoreDisplay = document.getElementById('score');
+      dealButton = document.getElementById('deal');
+      hitButton = document.getElementById('hit');
+      stayButton = document.getElementById('stay');
+      doubleButton = document.getElementById('double');
+      splitButton = document.getElementById('split');
+    });
+    function betup() {
+      if (bet >= 100) {return;}
+      bet += 10;
+      betDisplay.innerHTML = 'Bet: ' + bet + ' points';
+    }
+    function betdown() {
+      if (bet <= 10) {return;}
+      bet -= 10;
+      betDisplay.innerHTML = 'Bet: ' + bet + ' points';
+    }
+    function createCard(card, forPlayer, id) {
+      var val;
+      var suit = card.suit;
+      var faceUp = card.faceUp;
+      var color = faceUp ? ((suit == suits.CLUBS || suit == suits.SPADES) ? 'blackcard' : 'redcard') : 'downcard';
+      var element = document.createElement('div');
+      element.classList.add(color);
+      switch (card.val) {
+        case 1: {
+          val = 'A';
+          break;
+        }
+        case 11: {
+          val = 'J';
+          card.val = 10;
+          break;
+        }
+        case 12: {
+          val = 'Q';
+          card.val = 10;
+          break;
+        }
+        case 13: {
+          val = 'K';
+          card.val = 10;
+          break;
+        }
+        default: {
+          val = card.val;
+          break;
+        }
+      }
+      var suitEnt = '&clubs;';
+      switch (suit) {
+        case 'Clubs': {
+          suitEnt = '&clubs;';
+          break;
+        }
+        case 'Diamonds': {
+          suitEnt = '&diams;';
+          break;
+        }
+        case 'Spades': {
+          suitEnt = '&spades;';
+          break;
+        }
+        case 'Hearts': {
+          suitEnt = '&hearts;';
+          break;
+        }
+      }
+      element.id = id;
+      if (forPlayer == decks.USER) {
+        document.getElementById('plycards').appendChild(element);
+        plydeck.push(card);
+        pdid.push(id);
+      } else if(forPlayer == decks.SPLIT) {
+        document.getElementById('pscards').appendChild(element);
+        psdeck.push(card);
+        psdid.push(id);
+      } else {
+        document.getElementById('comcards').appendChild(element);
+        comdeck.push(card);
+        cdid.push(id);
+      }
+      if (faceUp) {
+        var hicard = document.createElement('aside');
+        var midcard = document.createElement('label');
+        var lowcard = document.createElement('aside');
+        var hilabel = document.createElement('label');
+        var lowlabel = document.createElement('label');
+        hicard.classList.add('hicard');
+        midcard.classList.add('midcard');
+        lowcard.classList.add('lowcard');
+        midcard.innerHTML = val;
+        hilabel.innerHTML = suitEnt;
+        lowlabel.innerHTML = suitEnt;
+        midcard.classList.add('cardlabel');
+        hilabel.classList.add('cardlabel');
+        lowlabel.classList.add('cardlabel');
+        element.appendChild(hicard);
+        element.appendChild(midcard);
+        element.appendChild(lowcard);
+        hicard.appendChild(hilabel);
+        lowcard.appendChild(lowlabel);
+      } else {
+        var dcback = document.createElement('div');
+        var dcbcircle = document.createElement('div');
+        var dcbcc = document.createElement('div');
+        dcback.classList.add('dcback');
+        dcbcircle.classList.add('dcbcircle');
+        dcbcc.classList.add('dcbcc');
+        element.appendChild(dcback);
+        dcback.appendChild(dcbcircle);
+        dcbcircle.appendChild(dcbcc);
+      }
+    }
+    function flipCard(id) {
+      var element = document.getElementById(id);
+      var faceUp = !element.classList.contains('downcard');
+      var deck = element.parentElement.id;
+      var midTextSize = '64px';
+      var card;
+      if (deck == 'comcards') {
+        card = comdeck[cdid.indexOf(id)];
+      } else {
+        card = plydeck[pdid.indexOf(id)];
+      }
+      var val;
+      switch (card.val) {
+        case 1: {
+          val = 'A';
+          break;
+        }
+        case 11: {
+          val = 'J';
+          card.val = 10;
+          break;
+        }
+        case 12: {
+          val = 'Q';
+          card.val = 10;
+          break;
+        }
+        case 13: {
+          val = 'K';
+          card.val = 10;
+          break;
+        }
+        default: {
+          val = card.val;
+          break;
+        }
+      }
+      var suitEnt = '&clubs;';
+      switch (card.suit) {
+        case 'Clubs': {
+          suitEnt = '&clubs;';
+          break;
+        }
+        case 'Diamonds': {
+          suitEnt = '&diams;';
+          break;
+        }
+        case 'Spades': {
+          suitEnt = '&spades;';
+          break;
+        }
+        case 'Hearts': {
+          suitEnt = '&hearts;';
+          break;
+        }
+      }
+      if (faceUp) {
+        for (var i = element.children.length - 1; i >= 0; i--) {
+          element.children.item(i).remove();
+        }
+        if (card.suit == suits.CLUBS || card.suit == suits.SPADES) {
+          element.classList.replace('blackcard', 'downcard');
+        } else {
+          element.classList.replace('redcard', 'downcard');
+        }
+        var dcback = document.createElement('div');
+        var dcbcircle = document.createElement('div');
+        var dcbcc = document.createElement('div');
+        dcback.classList.add('dcback');
+        dcbcircle.classList.add('dcbcircle');
+        dcbcc.classList.add('dcbcc');
+        element.appendChild(dcback);
+        dcback.appendChild(dcbcircle);
+        dcbcircle.appendChild(dcbcc);
+      } else {
+        for (var i = element.children.length - 1; i >= 0; i--) {
+          element.children.item(i).remove();
+        }
+        if (card.suit == suits.CLUBS || card.suit == suits.SPADES) {
+          element.classList.replace('downcard', 'blackcard');
+        } else {
+          element.classList.replace('downcard', 'redcard');
+        }
+        var hicard = document.createElement('aside');
+        var midcard = document.createElement('label');
+        var lowcard = document.createElement('aside');
+        var hilabel = document.createElement('label');
+        var lowlabel = document.createElement('label');
+        hicard.classList.add('hicard');
+        midcard.classList.add('midcard');
+        lowcard.classList.add('lowcard');
+        midcard.innerHTML = val;
+        hilabel.innerHTML = suitEnt;
+        lowlabel.innerHTML = suitEnt;
+        element.appendChild(hicard);
+        element.appendChild(midcard);
+        element.appendChild(lowcard);
+        hicard.appendChild(hilabel);
+        lowcard.appendChild(lowlabel);
+      }
+    }
+    function removeCard(id) {
+      var element = document.getElementById(id);
+      element.remove();
+      var card;
+      var deck;
+      for (var i = 0; i < comcards.length; i++) {
+        if (comcards[i].id == id) {
+          card = comcards[i];
+          deck = decks.COMPUTER;
+        }
+      }
+      for (var i = 0; i < plycards.length; i++) {
+        if (plycards[i].id == id) {
+          card = plycards[i];
+          deck = decks.USER;
+        }
+      }
+      for (var i = 0; i < pscards.length; i++) {
+        if (pscards[i].id == id) {
+          card = pscards[i];
+          deck = decks.SPLIT;
+        }
+      }
+      if (!!card) {
+        switch (deck) {
+          case decks.COMPUTER: {
+            comdeck.slice(comdeck.indexOf(card), comdeck.indexOf(card) + 1);
+          }
+          case decks.USER: {
+            plydeck.slice(plydeck.indexOf(card), plydeck.indexOf(card) + 1);
+          }
+          case decks.SPLIT: {
+            psdeck.slice(psdeck.indexOf(card), psdeck.indexOf(card) + 1);
+          }
+          default: {
+            console.error('Couldn\'t get proper deck value: ' + deck);
+          }
+        }
+      }
+    }
+    function random(min, max) {
+      return Math.floor(Math.random() * (max - min)) + min;
+    }
+    function shuffle() {
+      var tempDeck = [...deck];
+      deck = [];
+      for (var i = 0; i < tempDeck.length; i++) {
+        var selected = random(0, tempDeck.length);
+        deck.push(tempDeck[selected]);
+        tempDeck.slice(selected, selected + 1);
+      }
+    }
+    function calculateCards() {
+      var subtotal = 0;
+      var aces = 0;
+      var total = 0;
+      comCardTotal = 0;
+      for (var i = 0; i < comdeck.length; i++) {
+        if (comdeck[i].val == 1) {
+          aces++;
+        } else {
+          subtotal += comdeck[i].val;
+        }
+      }
+      total = subtotal;
+      if (aces > 0) {
+        for (var i = aces; i >= 0; i--) {
+          var elevens = i * 11;
+          var ones = aces - i;
+          total = subtotal + elevens + ones;
+          if (total <= 21) {break;}
+        }
+      }
+      if (comcards.length >= 5 && total <= 21 && !ended) {
+        endgame();
+      }
+      comCardTotal = total;
+      subtotal = 0;
+      aces = 0;
+      total = 0;
+      plyCardTotal = 0;
+      for (var i = 0; i < plydeck.length; i++) {
+        if (plydeck[i].val == 1) {
+          aces++;
+        } else {
+          subtotal += plydeck[i].val;
+        }
+      }
+      total = subtotal;
+      if (aces > 0) {
+        for (var i = aces; i >= 0; i--) {
+          var elevens = i * 11;
+          var ones = aces - i;
+          total = subtotal + elevens + ones;
+          if (total <= 21) {break;}
+        }
+      }
+      if (plycards.length >= 5 && total <= 21 && !ended) {
+        endgame();
+      }
+      plyCardTotal = total;
+      if (plyCardTotal >= 21) {
+        if (plyCardTotal > 21) {
+          plylegend.innerHTML = 'Player (missed)';
+        } else if (plyCardTotal == 21 && turn == 1) {
+          plylegend.innerHTML = 'Player (natural!)';
+        } else {
+          plylegend.innerHTML = 'Player (perfect!)';
+        }
+        plyStaying = true;
+      }
+      subtotal = 0;
+      aces = 0;
+      total = 0;
+      psCardTotal = 0;
+      for (var i = 0; i < psdeck.length; i++) {
+        if (psdeck[i].val == 1) {
+          aces++;
+        } else {
+          subtotal += psdeck[i].val;
+        }
+      }
+      total = subtotal;
+      if (aces > 0) {
+        for (var i = aces; i >= 0; i--) {
+          var elevens = i * 11;
+          var ones = aces - i;
+          total = subtotal + elevens + ones;
+          if (total <= 21) {break;}
+        }
+      }
+      if (pscards.length >= 5 && total <= 21 && !ended) {
+        endgame();
+      }
+      psCardTotal = total;
+      if (psCardTotal >= 21) {
+        if (psCardTotal > 21) {
+          pslegend.innerHTML = 'Player\'s Split (missed)';
+        } else if (psCardTotal == 21 && turn == 1) {
+          pslegend.innerHTML = 'Player\'s Split (natural!)';
+        } else {
+          pslegend.innerHTML = 'Player\'s Split (perfect!)';
+        }
+        psStaying = true;
+      }
+    }
+    async function getCardTotal(deck) {
+      await calculateCards();
+      switch (deck) {
+        case decks.USER: {return plyCardTotal;}
+        case decks.COMPUTER: {return comCardTotal;}
+        case decks.SPLIT: {return psCardTotal;}
+        default: {console.error('Error reading deck: ' + deck);}
+      }
+    }
+    function pickDeck(faceUp) {
+      if (deck.length > 0) {
+        var card = deck[0];
+        card.faceUp = faceUp;
+        deck.shift();
+        ident++;
+        barfront.style.width = ((deck.length / (deckCount * 52)) * 100) + '%';
+        return card;
+      } else {
+        alert('Notice: All decks have been used. The decks will now be refreshed.');
+        for (var i = 0; i < deckCount; i++) {
+          deck.push(...initDeck);
+        }
+        shuffle();
+        return pickDeck(faceUp);
+      }
+    }
+    function checkForSplit(forPlayer) {
+      if (forPlayer == decks.USER) {
+        return plydeck[0].val == plydeck[1].val;
+      } else {
+        return comdeck[0].val == comdeck[1].val;
+      }
+    }
+    function deal() {
+      if (playing) {
+        ident = 0;
+        for (var i = comcards.children.length - 1; i >= 0; i--) {
+          comcards.children.item(i).remove();
+        }
+        for (var i = plycards.children.length - 1; i >= 0; i--) {
+          plycards.children.item(i).remove();
+        }
+        for (var i = pscards.children.length - 1; i >= 0; i--) {
+          pscards.children.item(i).remove();
+        }
+        comdeck = [];
+        cdid = [];
+        plydeck = [];
+        pdid = [];
+        psdeck = [];
+        psdid = [];
+        // Laid out as a dealer typically would -- one card to the guest, one card to the host, one card to the guest, and so on.
+        createCard(pickDeck(true), decks.USER, 'Card' + ident);
+        createCard(pickDeck(false), decks.COMPUTER, 'Card' + ident);
+        createCard(pickDeck(true), decks.USER, 'Card' + ident);
+        createCard(pickDeck(true), decks.COMPUTER, 'Card' + ident);
+        betDisplay.innerHTML = 'Bet: ' + bet + ' points';
+        comlegend.innerHTML = 'Dealer';
+        plylegend.innerHTML = 'Player';
+        pslegend.innerHTML = 'Player\'s Split';
+        ended = false;
+        dealButton.disabled = true;
+        buButton.disabled = true;
+        bdButton.disabled = true;
+        hitButton.disabled = false;
+        stayButton.disabled = false;
+        doubleButton.disabled = false;
+        splitButton.disabled = false;
+        comCardTotal = 0;
+        plyCardTotal = 0;
+        comStaying = false;
+        plyStaying = false;
+        psStaying = false;
+        comDoubled = false;
+        plyDoubled = false;
+        psDoubled = false;
+        splitting = false;
+        inSplit = false;
+        plysplit.hidden = true;
+        turn = 1;
+        if (!checkForSplit(decks.USER)) {
+          splitButton.disabled = true;
+        }
+      } else {
+        if (deckCount <= 0) {
+          while (true) {
+            var input = prompt('Please enter the amount of decks you would like to play with. (Recommended: 4, Max: 10)');
+            deckCount = Math.floor(input);
+            if (Number.isNaN(deckCount) || deckCount <= 0 || deckCount > 10) {continue;}
+            break;
+          }
+        }
+        for (var i = 0; i < deckCount; i++) {
+          deck.push(...initDeck);
+        }
+        shuffle();
+        playing = true;
+        deal();
+      }
+    }
+    async function hit() {
+      if (inSplit) {
+        createCard(pickDeck(true), decks.SPLIT, 'Card' + ident);
+      } else {
+        createCard(pickDeck(true), decks.USER, 'Card' + ident);
+      }
+      if (await getCardTotal(decks.USER) >= 21) {
+        plyStaying = true;
+        plylegend.innerHTML = 'Player (missed)';
+      }
+      comturn();
+    }
+    function stay() {
+      if (inSplit) {
+        psStaying = true;
+        pslegend.innerHTML = 'Player\'s Split (staying)';
+      } else {
+        plyStaying = true;
+        plylegend.innerHTML = 'Player (staying)';
+      }
+      comturn();
+    }
+    function double() {
+      doubled = true;
+      bet *= 2;
+      betDisplay.innerHTML = 'Bet: ' + (bet / 2) + ' (&times;2) points';
+      if (inSplit) {
+        psStaying = true;
+      } else {
+        plyStaying = true;
+      }
+      hit();
+    }
+    function split() {
+      plysplit.hidden = false;
+      var moveCard = plydeck[1];
+      var val = document.getElementById('Card3').getElementsByClassName('midcard').item(0).innerHTML;
+      console.log(val);
+      switch (val) {
+        case 'A': {
+          val = 1;
+        }
+        case 'J': {
+          val = 11;
+        }
+        case 'Q': {
+          val = 12;
+        }
+        case 'K': {
+          val = 13;
+        }
+      }
+      moveCard.val = Math.floor(val);
+      removeCard('Card3');
+      createCard(moveCard, decks.SPLIT, 'Card3');
+      createCard(pickDeck(true), decks.USER, 'Card' + ident);
+      createCard(pickDeck(true), decks.SPLIT, 'Card' + ident);
+      splitting = true;
+      inSplit = false;
+      splitButton.disabled = true;
+    }
+    function plyturn() {
+      inSplit = false;
+      if (plyStaying) {
+        comturn();
+        return;
+      }
+      hitButton.disabled = false;
+      stayButton.disabled = false;
+      doubleButton.disabled = false;
+      splitButton.disabled = true;
+      turn++;
+    }
+    async function comturn() {
+      if (splitting && !inSplit) {
+        inSplit = true;
+        return;
+      }
+      if (comStaying) {
+        if (plyStaying && comStaying && ((splitting && psStaying) || (!splitting))) {endgame();}
+        return;
+      }
+      turn++;
+      if (await getCardTotal(decks.COMPUTER) > 16) {
+        comStaying = true;
+        comlegend.innerHTML = 'Dealer (staying)';
+      } else {
+        createCard(pickDeck(true), decks.COMPUTER, 'Card' + ident);
+      }
+      if (plyStaying && comStaying && ((splitting && psStaying) || (!splitting))) {endgame();} else {plyturn();}
+    }
+    function splitturn() {
+      if (psStaying) {
+        comturn();
+        return;
+      }
+      inSplit = true;
+      turn++;
+    }
+    async function endgame() {
+      ended = true;
+      flipCard('Card2');
+      hitButton.disabled = true;
+      stayButton.disabled = true;
+      doubleButton.disabled = true;
+      splitButton.disabled = true;
+      dealButton.disabled = false;
+      if (await getCardTotal(decks.COMPUTER) >= 21) {
+        if (comCardTotal > 21) {
+          comlegend.innerHTML = 'Dealer (missed)';
+        } else {
+          comlegend.innerHTML = 'Dealer (perfect!)';
+        }
+      }
+      // Put scoring here
+      if (doubled) {
+        doubled = false;
+        bet /= 2;
+      }
+    }
+  </script>
+  <style>
+    body {
+      color: white;
+      background-color: green;
+    }
+    a:link {
+      color: skyblue;
+    }
+    a:visited {
+      color: magenta;
+    }
+    a:active {
+      color: orange;
+    }
+    #comcards, #plycards, #pscards {
+      height: 180px;
+    }
+    #pscards {
+      background-color: goldenrod;
+      border: 5px solid goldenrod;
+    }
+    #barback {
+      height: 24px;
+      background-color: black;
+    }
+    #barfront {
+      height: 24px;
+      background-color: red;
+    }
+    .redcard {
+      background-color: white;
+      color: red;
+      width: 100px;
+      height: 160px;
+      position: relative;
+      display: inline-block;
+      margin: 5px;
+      vertical-align: top;
+    }
+    .blackcard {
+      background-color: white;
+      color: black;
+      width: 100px;
+      height: 160px;
+      position: relative;
+      display: inline-block;
+      margin: 5px;
+      vertical-align: top;
+    }
+    .downcard {
+      background-color: white;
+      color: blue;
+      width: 100px;
+      height: 160px;
+      position: relative;
+      display: inline-block;
+      margin: 5px;
+      vertical-align: top;
+    }
+    .hicard {
+      position: absolute;
+      left: 0%;
+      top: 0%;
+      display: inline-block;
+      font-size: 24px;
+    }
+    .lowcard {
+      position: absolute;
+      left: 100%;
+      top: 100%;
+      transform: translate(-100%, -100%);
+      display: inline-block;
+      font-size: 24px;
+    }
+    .midcard {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: inline;
+      font-size: 64px;
+      text-align: center;
+    }
+    .cardlabel {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    .dcback {
+      background-color: blue;
+      width: 80px;
+      height: 140px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .dcbcircle {
+      background-color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .dcbcc {
+      background-color: blue;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <ul>
+      <li><a href="./index.html">Back to ./index.html</a></li>
+      <li><a href="./images-and-frames.html">Images and IFrames section</a></li>
+      <li><a href="./lists-and-tables.html">Lists and Tables section</a></li>
+      <li><a href="./forms.html">Apply for a j*b</a></li>
+      <li><a href="./was.html">Whack-A-Square</a></li>
+      <li><a href="./things-i-helped-with.html">Things I helped with</a></li>
+      <li><a href="./bjack.html">Here (./bjack.html)</a></li>
+    </ul>
+    <h1>Black Jack</h1>
+    <h2>(I'm running out of ideas)</h2>
+    <hr />
+  </header>
+  <main>
+    <fieldset>
+      <legend id="comlegend">Dealer</legend>
+      <section id="comcards"></section>
+    </fieldset>
+    <fieldset>
+      <legend id="plylegend">Player</legend>
+      <section id="plycards"></section>
+    </fieldset>
+    <div id="plysplit" hidden>
+      <fieldset>
+        <legend id="pslegend">Player's Split</legend>
+        <section id="pscards"></section>
+      </fieldset>
+    </div>
+    <hr />
+    <section id="deck">
+      <div id="barback">
+        <div id="barfront"></div>
+      </div>
+    </section>
+    <hr />
+    <section id="controls">
+      <label id="score">Score: 0 points</label>
+      <br />
+      <button id="betup" onclick="betdown();">-</button>
+      <label id="bet">Bet: 10 points</label>
+      <button id="betdown" onclick="betup();">+</button>
+      <br />
+      <button id="deal" onclick="deal();">Deal</button>
+      <button id="hit" onclick="hit();" disabled>Hit</button>
+      <button id="stay" onclick="stay();" disabled>Stay</button>
+      <button id="double" onclick="double();" disabled>Double</button>
+      <button id="split" onclick="split();" disabled>Split</button>
+    </section>
+  </main>
+  <footer>
+    <hr />
+    <a href="./index.html">Back to ./index.html</a>
+  </footer>
+</body>
+</html>
