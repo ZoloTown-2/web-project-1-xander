@@ -8,7 +8,7 @@ nav {
   padding: 5px;
   background-color: lightgray;
 }
-header, main, footer {
+header, main {
   margin: 8px;
 }
 hr {
@@ -29,6 +29,29 @@ nav ul {
   display: inline-block;
   color: black;
 }
+header h1, header h2, header h3 {
+  text-align: center;
+}
 main h1, main h2, main h3 {
+  text-align: center;
+}
+h2 {
+  font-style: italic;
+}
+h3 {
   text-decoration: underline;
+}
+footer {
+  background-color: dimgray;
+  color: white;
+  padding: 8px;
+}
+footer a:link {
+  color: skyblue;
+}
+footer a:visited {
+  color: magenta;
+}
+footer a:active {
+  color: orange;
 }

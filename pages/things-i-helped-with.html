@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Things I Helped People With - XWP</title>
+  <style>
+    #fakelink {
+      color: indigo;
+      cursor: pointer;
+      user-select: none;
+    }
+  </style>
 </head>
 <body style="font-family: Arial;">
   <header>
@@ -57,7 +64,7 @@
 
     <a href="./things-i-helped-with.html">This is how a link works. You use "href" to determine the file, not "src".</a><br />
     <a href="./things-i-helped-with.html">And, you definitely, definitely don't put your link in the inner HTML, only in "href".</a><br />
-    <span id="fakelink" style="color: indigo; cursor: pointer;" onclick="alert('See?');" onmousedown="document.getElementById('fakelink').style.color = 'red';" onmouseup="document.getElementById('fakelink').style.color = 'indigo';" onmouseleave="document.getElementById('fakelink').style.color = 'indigo';"><u>Underlined text can also unfortunately be mistaken for hyprelinks, so people should try to avoid using the &lt;u&gt; tag.</u></span>
+    <span id="fakelink" onclick="alert('See?');" onmousedown="document.getElementById('fakelink').style.color = 'red';" onmouseup="document.getElementById('fakelink').style.color = 'indigo';" onmouseleave="document.getElementById('fakelink').style.color = 'indigo';"><u>Underlined text can also unfortunately be mistaken for hyprelinks, so people should try to avoid using the &lt;u&gt; tag.</u></span>
     
     <h3>Text Decoration</h3>
     

@@ -1,3 +1,5 @@
 Please don't forget to add a form of some kind
 
-Additionally, please add a footer to the main page.
+Add the "count" portion to bjack.html.
+
+Make bjack.html calculate cards right after dealing them.
