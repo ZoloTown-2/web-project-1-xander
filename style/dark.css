@@ -1,0 +1,12 @@
+body {
+  color: white;
+}
+a:link {
+  color: skyblue;
+}
+a:visited {
+  color: magenta;
+}
+a:active {
+  color: orange;
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Whack-A-Square - XWP</title>
+  <title>Square Clicker - XWP</title>
   <script>
     let startButton;
     let scoreField;
@@ -109,41 +109,26 @@
       target.style.top = random(250) + 'px';
     }
   </script>
-  <style>
-    main {
-      width: 280px;
-      height: 280px;
-      border: 1px solid black;
-      margin: 0 auto;
-    }
-    section {
-      text-align: center;
-    }
-    #target {
-      background-color: black;
-      position: relative;
-      width: 30px;
-      height: 30px;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-  </style>
+  <link rel="stylesheet" href="../style/main.css" />
+  <link rel="stylesheet" href="../style/square.css" />
 </head>
-<body style="font-family: Arial;">
+<body>
+  <nav>
+    <ul>
+      <li><a href="../index.html">Home Page</a></li>
+      <li><a href="./square.html">[Click an agile Square]</a></li>
+      <li><a href="./bjack.html">Black Jack</a></li>
+    </ul>
+    <ul>
+      <li><a href="./things-i-helped-with.html">Things I've helped with</a></li>
+      <li><a href="./aspirations.html">My aspirations</a></li>
+      <li><a href="./oldstuff.html">Old computer stuff</a></li>
+    </ul>
+    <hr />
+  </nav>
   <header>
-    <nav>
-      <ul>
-        <li><a href="./index.html">Back to ./index.html</a></li>
-        <li><a href="./images-and-frames.html">Images and IFrames section</a></li>
-        <li><a href="./lists-and-tables.html">Lists and Tables section</a></li>
-        <li><a href="./forms.html">Apply for a j*b</a></li>
-        <li><a href="./was.html">Here (./was.html)</a></li>
-      </ul>
-    </nav>
-    <h1>Whack-A-Square</h1>
-    <h2>Not traditional whack-a-mole</h2>
+    <h1>The one and only</h1>
+    <h2>Square clicker</h2>
   </header>
   <hr />
   <section>
@@ -158,7 +143,7 @@
   </main>
   <footer>
     <hr />
-    <a href="./index.html">Back to ./index.html</a>
+    <a href="../index.html">Back to the homepage...</a>
   </footer>
 </body>
 </html>

@@ -1,0 +1,34 @@
+body {
+  font-family: Arial, 'Courier New', Serif;
+  margin: 0;
+}
+nav {
+  position: sticky;
+  top: 0;
+  padding: 5px;
+  background-color: lightgray;
+}
+header, main, footer {
+  margin: 8px;
+}
+hr {
+  border-width: 3px;
+  padding: 0px;
+}
+nav a:link {
+  color: blue;
+}
+nav a:visited {
+  color: indigo;
+}
+nav a:active {
+  color: red;
+}
+nav ul {
+  font-size: 14px;
+  display: inline-block;
+  color: black;
+}
+main h1, main h2, main h3 {
+  text-decoration: underline;
+}
