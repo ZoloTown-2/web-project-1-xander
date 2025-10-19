@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Black Jack - First Web Project</title>
+  <script src="../scripts/hidenav.js"></script>
   <script src="../scripts/bjack.js"></script>
   <link rel="stylesheet" href="../style/main.css" />
   <link rel="stylesheet" href="../style/dark.css" />
@@ -21,11 +22,12 @@
       <li><a href="./aspirations.html">My aspirations</a></li>
       <li><a href="./oldstuff.html">Old computer stuff</a></li>
     </ul>
+    <button id="hidenav" onclick="hidenav();">^</button>
     <hr />
   </nav>
   <header>
     <h1>Black Jack</h1>
-    <h2>(I'm running out of ideas)</h2>
+    <h2>Let this game teach you why you shouldn't gamble</h2>
     <hr />
   </header>
   <main>
@@ -49,13 +51,18 @@
         <div id="barfront"></div>
       </div>
     </section>
+    <label id="narrator">Press "Deal" to begin.</label>
     <hr />
     <section id="controls">
+      <label id="count">Count: 0</label>
+      <br />
       <label id="score">Score: 0 points</label>
       <br />
-      <button id="betup" onclick="betdown();">-</button>
+      <label id="wins">Wins: 0 - 0</label>
+      <br />
+      <button id="betdown" onclick="betdown();">-</button>
       <label id="bet">Bet: 10 points</label>
-      <button id="betdown" onclick="betup();">+</button>
+      <button id="betup" onclick="betup();">+</button>
       <br />
       <button id="deal" onclick="deal();">Deal</button>
       <button id="hit" onclick="hit();" disabled>Hit</button>

@@ -1,3 +1,4 @@
+/* Feel free to ask me how any of this works. I did not use any AI for this. */
 body {
   font-family: Arial, 'Courier New', Serif;
   margin: 0;
@@ -7,6 +8,8 @@ nav {
   top: 0;
   padding: 5px;
   background-color: lightgray;
+  z-index: 1;
+  /* z-index is used to ensure that the header is above all else. */
 }
 header, main {
   margin: 8px;
@@ -54,4 +57,10 @@ footer a:visited {
 }
 footer a:active {
   color: orange;
+}
+#hidenav {
+  float: right;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
 }

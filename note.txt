@@ -1,5 +1,7 @@
-Please don't forget to add a form of some kind
+Please don't forget to add a form of some kind.
 
-Add the "count" portion to bjack.html.
+Make bjack.html allow betting again after round completion.
 
-Make bjack.html calculate cards right after dealing them.
+Make bjack.html check which deck did better after round completion.
+
+Make bjack.html check if the main or split deck did better after round completion.

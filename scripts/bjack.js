@@ -1,3 +1,6 @@
+// Feel free to ask me how any of this works.
+// I did not use any AI for this. This took me a very, very long time.
+// As any programmer would, I did a lot of googling to reach this point.
 const suits = {
   CLUBS: 'Clubs',
   DIAMONDS: 'Diamonds',
@@ -52,10 +55,16 @@ let barback;
 let barfront;
 let bet = 10;
 let score = 0;
+let count = 0;
+let comwins = 0;
+let plywins = 0;
 let buButton;
 let bdButton;
+let narrator;
 let betDisplay;
 let scoreDisplay;
+let countDisplay;
+let winsDisplay;
 let dealButton;
 let hitButton;
 let stayButton;
@@ -64,6 +73,7 @@ let splitButton;
 let playing = false;
 let ident = 0;
 let turn = 1;
+let turnType = decks.COMPUTER; // For debugging only
 for (var i = 0; i < 52; i++) {
   var val = (i % 13) + 1;
   var suitNum = Math.floor(i / 13) + 1;
@@ -105,8 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
   barfront = document.getElementById('barfront');
   buButton = document.getElementById('betup');
   bdButton = document.getElementById('betdown');
+  narrator = document.getElementById('narrator');
   betDisplay = document.getElementById('bet');
   scoreDisplay = document.getElementById('score');
+  countDisplay = document.getElementById('count');
+  winsDisplay = document.getElementById('wins');
   dealButton = document.getElementById('deal');
   hitButton = document.getElementById('hit');
   stayButton = document.getElementById('stay');
@@ -219,17 +232,19 @@ function createCard(card, forPlayer, id) {
     dcback.appendChild(dcbcircle);
     dcbcircle.appendChild(dcbcc);
   }
+  calculateCards();
 }
 function flipCard(id) {
   var element = document.getElementById(id);
   var faceUp = !element.classList.contains('downcard');
   var deck = element.parentElement.id;
-  var midTextSize = '64px';
   var card;
   if (deck == 'comcards') {
     card = comdeck[cdid.indexOf(id)];
-  } else {
+  } else if (deck == 'plycards') {
     card = plydeck[pdid.indexOf(id)];
+  } else {
+    card = psdeck[psdid.indexOf(id)];
   }
   var val;
   switch (card.val) {
@@ -325,38 +340,42 @@ function removeCard(id) {
   var element = document.getElementById(id);
   element.remove();
   var card;
-  var deck;
-  for (var i = 0; i < comcards.length; i++) {
-    if (comcards[i].id == id) {
-      card = comcards[i];
-      deck = decks.COMPUTER;
+  var tdeck = decks.COMPUTER;
+  for (var i = 0; i < comdeck.length; i++) {
+    if (cdid[i] == id) {
+      card = comdeck[i];
+      tdeck = decks.COMPUTER;
     }
   }
-  for (var i = 0; i < plycards.length; i++) {
-    if (plycards[i].id == id) {
-      card = plycards[i];
-      deck = decks.USER;
+  for (var i = 0; i < plydeck.length; i++) {
+    if (pdid[i] == id) {
+      card = plydeck[i];
+      tdeck = decks.USER;
     }
   }
-  for (var i = 0; i < pscards.length; i++) {
-    if (pscards[i].id == id) {
-      card = pscards[i];
-      deck = decks.SPLIT;
+  for (var i = 0; i < psdeck.length; i++) {
+    if (psdid[i] == id) {
+      card = psdeck[i];
+      tdeck = decks.SPLIT;
     }
   }
   if (!!card) {
-    switch (deck) {
+    switch (tdeck) {
       case decks.COMPUTER: {
-        comdeck.slice(comdeck.indexOf(card), comdeck.indexOf(card) + 1);
+        comdeck.splice(comdeck.indexOf(card), 1);
+        break;
       }
       case decks.USER: {
-        plydeck.slice(plydeck.indexOf(card), plydeck.indexOf(card) + 1);
+        plydeck.splice(plydeck.indexOf(card), 1);
+        break;
       }
       case decks.SPLIT: {
-        psdeck.slice(psdeck.indexOf(card), psdeck.indexOf(card) + 1);
+        psdeck.splice(psdeck.indexOf(card), 1)
+        break;
       }
       default: {
-        console.error('Couldn\'t get proper deck value: ' + deck);
+        console.error('Couldn\'t get proper deck value: ' + tdeck);
+        break;
       }
     }
   }
@@ -366,14 +385,19 @@ function random(min, max) {
 }
 function shuffle() {
   var tempDeck = [...deck];
+  var length = deck.length;
+  // length's use is required in the for loop, because
+  // if we use 'tempDeck.length' instead, the length
+  // will update each loop to the elements being
+  // spliced out. This halves the deck.
   deck = [];
-  for (var i = 0; i < tempDeck.length; i++) {
+  for (var i = 0; i < length; i++) {
     var selected = random(0, tempDeck.length);
     deck.push(tempDeck[selected]);
-    tempDeck.slice(selected, selected + 1);
+    tempDeck.splice(selected, 1);
   }
 }
-function calculateCards() {
+async function calculateCards() {
   var subtotal = 0;
   var aces = 0;
   var total = 0;
@@ -394,10 +418,10 @@ function calculateCards() {
       if (total <= 21) {break;}
     }
   }
-  if (comcards.length >= 5 && total <= 21 && !ended) {
+  comCardTotal = total;
+  if (comdeck.length >= 5 && total <= 21 && !ended) {
     endgame();
   }
-  comCardTotal = total;
   subtotal = 0;
   aces = 0;
   total = 0;
@@ -467,13 +491,13 @@ function calculateCards() {
     psStaying = true;
   }
 }
-async function getCardTotal(deck) {
+async function getCardTotal(tdeck) {
   await calculateCards();
-  switch (deck) {
+  switch (tdeck) {
     case decks.USER: {return plyCardTotal;}
     case decks.COMPUTER: {return comCardTotal;}
     case decks.SPLIT: {return psCardTotal;}
-    default: {console.error('Error reading deck: ' + deck);}
+    default: {console.error('Error reading deck: ' + tdeck);}
   }
 }
 function pickDeck(faceUp) {
@@ -483,6 +507,25 @@ function pickDeck(faceUp) {
     deck.shift();
     ident++;
     barfront.style.width = ((deck.length / (deckCount * 52)) * 100) + '%';
+    switch (card.val) {
+      case 2:
+      case 3:
+      case 4:
+      case 5:
+      case 6: {
+        count++;
+        break;
+      }
+      case 1:
+      case 10:
+      case 11:
+      case 12:
+      case 13: {
+        count--;
+        break;
+      }
+    }
+    countDisplay.innerHTML = 'Count: ' + count;
     return card;
   } else {
     alert('Notice: All decks have been used. The decks will now be refreshed.');
@@ -490,6 +533,7 @@ function pickDeck(faceUp) {
       deck.push(...initDeck);
     }
     shuffle();
+    count = 0;
     return pickDeck(faceUp);
   }
 }
@@ -550,6 +594,8 @@ function deal() {
     if (!checkForSplit(decks.USER)) {
       splitButton.disabled = true;
     }
+    turnType = 'User';
+    narrator.innerHTML = 'Ongoing game...';
   } else {
     if (deckCount <= 0) {
       while (true) {
@@ -604,7 +650,6 @@ function split() {
   plysplit.hidden = false;
   var moveCard = plydeck[1];
   var val = document.getElementById('Card3').getElementsByClassName('midcard').item(0).innerHTML;
-  console.log(val);
   switch (val) {
     case 'A': {
       val = 1;
@@ -627,12 +672,23 @@ function split() {
   splitting = true;
   inSplit = false;
   splitButton.disabled = true;
+  plycards.style.backgroundColor = 'goldenrod';
+  plycards.style.border = '5px solid goldenrod';
+  calculateCards();
+  plyturn();
 }
 function plyturn() {
+  turnType = decks.USER;
   inSplit = false;
   if (plyStaying) {
     comturn();
     return;
+  }
+  if (splitting) {
+    pscards.style.backgroundColor = 'green';
+    pscards.style.border = '0px solid goldenrod';
+    plycards.style.backgroundColor = 'goldenrod';
+    plycards.style.border = '5px solid goldenrod';
   }
   hitButton.disabled = false;
   stayButton.disabled = false;
@@ -641,9 +697,16 @@ function plyturn() {
   turn++;
 }
 async function comturn() {
+  turnType = decks.COMPUTER;
   if (splitting && !inSplit) {
     inSplit = true;
+    splitturn();
     return;
+  } else if (splitting) {
+    pscards.style.backgroundColor = 'green';
+    pscards.style.border = '0px solid goldenrod';
+    plycards.style.backgroundColor = 'green';
+    plycards.style.border = '0px solid green';
   }
   if (comStaying) {
     if (plyStaying && comStaying && ((splitting && psStaying) || (!splitting))) {endgame();}
@@ -659,10 +722,15 @@ async function comturn() {
   if (plyStaying && comStaying && ((splitting && psStaying) || (!splitting))) {endgame();} else {plyturn();}
 }
 function splitturn() {
+  turnType = decks.SPLIT;
   if (psStaying) {
     comturn();
     return;
   }
+  pscards.style.backgroundColor = 'goldenrod';
+  pscards.style.border = '5px solid goldenrod';
+  plycards.style.backgroundColor = 'green';
+  plycards.style.border = '0px solid green';
   inSplit = true;
   turn++;
 }
@@ -674,6 +742,8 @@ async function endgame() {
   doubleButton.disabled = true;
   splitButton.disabled = true;
   dealButton.disabled = false;
+  buButton.disabled = false;
+  bdButton.disabled = false;
   if (await getCardTotal(decks.COMPUTER) >= 21) {
     if (comCardTotal > 21) {
       comlegend.innerHTML = 'Dealer (missed)';
@@ -681,7 +751,33 @@ async function endgame() {
       comlegend.innerHTML = 'Dealer (perfect!)';
     }
   }
-  // Put scoring here
+  // Check if split deck did better or not
+  // Check which deck did better
+  // Score accordingly (bet and win)
+  var plyWinning;
+  calculateCards(); // So we don't need to use await getCardTotal(); all the time
+  if (splitting) {
+    plyWinning = plyCardTotal > psCardTotal ? plyCardTotal : psCardTotal;
+  } else {
+    plyWinning = plyCardTotal;
+  }
+  if (plyWinning > 21) {plyWinning = 0;}
+  if (comCardTotal > 21) {comCardTotal = 0;}
+  console.log('PlyWinning: ' + plyWinning);
+  console.log('ComWinning: ' + comCardTotal);
+  if (plyWinning > comCardTotal) {
+    score += bet;
+    plywins++;
+    narrator.innerHTML = 'Player won. (+' + bet + ' points)';
+  } else if (comCardTotal > plyWinning) {
+    score -= bet;
+    comwins++;
+    narrator.innerHTML = 'Dealer won. (-' + bet + ' points)';
+  } else {
+    narrator.innerHTML = 'Tie.';
+  }
+  scoreDisplay.innerHTML = 'Score: ' + score + ' points';
+  winsDisplay.innerHTML = 'Wins: ' + plywins + ' - ' + comwins;
   if (doubled) {
     doubled = false;
     bet /= 2;

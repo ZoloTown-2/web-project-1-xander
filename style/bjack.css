@@ -9,10 +9,6 @@ header, nav, footer {
 #comcards, #plycards, #pscards {
   height: 180px;
 }
-#pscards {
-  background-color: goldenrod;
-  border: 5px solid goldenrod;
-}
 #barback {
   height: 24px;
   background-color: black;
