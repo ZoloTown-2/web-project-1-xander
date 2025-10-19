@@ -1,0 +1,112 @@
+body {
+  background-color: green;
+  font-family: 'Times New Roman', 'Courier New', Arial;
+  
+}
+header, nav, footer {
+  font-family: Arial, 'Courier New', 'Times New Roman';
+}
+#comcards, #plycards, #pscards {
+  height: 180px;
+}
+#pscards {
+  background-color: goldenrod;
+  border: 5px solid goldenrod;
+}
+#barback {
+  height: 24px;
+  background-color: black;
+}
+#barfront {
+  height: 24px;
+  background-color: red;
+}
+.redcard {
+  background-color: white;
+  color: red;
+  width: 100px;
+  height: 160px;
+  position: relative;
+  display: inline-block;
+  margin: 5px;
+  vertical-align: top;
+}
+.blackcard {
+  background-color: white;
+  color: black;
+  width: 100px;
+  height: 160px;
+  position: relative;
+  display: inline-block;
+  margin: 5px;
+  vertical-align: top;
+}
+.downcard {
+  background-color: white;
+  color: blue;
+  width: 100px;
+  height: 160px;
+  position: relative;
+  display: inline-block;
+  margin: 5px;
+  vertical-align: top;
+}
+.hicard {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  display: inline-block;
+  font-size: 24px;
+}
+.lowcard {
+  position: absolute;
+  left: 100%;
+  top: 100%;
+  transform: translate(-100%, -100%);
+  display: inline-block;
+  font-size: 24px;
+}
+.midcard {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: inline;
+  font-size: 64px;
+  text-align: center;
+}
+.cardlabel {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.dcback {
+  background-color: blue;
+  width: 80px;
+  height: 140px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.dcbcircle {
+  background-color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.dcbcc {
+  background-color: blue;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
