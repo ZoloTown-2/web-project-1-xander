@@ -58,6 +58,16 @@ footer a:visited {
 footer a:active {
   color: orange;
 }
+figure {
+  border: 2px solid black;
+}
+figure img {
+  width: 50%;
+}
+figcaption {
+  font-style: italic;
+  font-size: 24px;
+}
 #hidenav {
   float: right;
   width: 40px;

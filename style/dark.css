@@ -10,3 +10,6 @@ a:visited {
 a:active {
   color: orange;
 }
+figure {
+  border: 2px solid white;
+}
