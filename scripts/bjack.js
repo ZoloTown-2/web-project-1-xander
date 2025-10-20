@@ -608,6 +608,9 @@ function deal() {
     for (var i = 0; i < deckCount; i++) {
       deck.push(...initDeck);
     }
+    plywins = 0;
+    comwins = 0;
+    winsDisplay.innerHTML = 'Wins: 0 - 0';
     shuffle();
     playing = true;
     deal();

@@ -63,4 +63,7 @@ footer a:active {
   width: 40px;
   height: 40px;
   font-size: 20px;
+  background-color: gray;
+  color: white;
+  border: 1px solid black;
 }

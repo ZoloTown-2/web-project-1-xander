@@ -3,14 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Things I Helped People With - XWP</title>
+  <title>Things I Helped People With - Xander's Website</title>
   <script src="../scripts/hidenav.js"></script>
   <link rel="stylesheet" href="../style/main.css" />
   <style>
+    body {
+      background-color: orange;
+    }
     #fakelink {
       color: indigo;
       cursor: pointer;
       user-select: none;
+    }
+    .borderdemo {
+      display: inline-block;
+      padding: 10px;
     }
   </style>
 </head>
@@ -22,8 +29,7 @@
       <li><a href="./bjack.html">Black Jack</a></li>
     </ul>
     <ul>
-      <li><a href="./things-i-helped-with.html">Things I've helped with</a></li>
-      <li><a href="./aspirations.html">My aspirations</a></li>
+      <li><a href="./things-i-helped-with.html">[Things I've helped with]</a></li>
       <li><a href="./oldstuff.html">Old computer stuff</a></li>
     </ul>
     <button id="hidenav" onclick="hidenav();">^</button>
@@ -31,39 +37,20 @@
   </nav>
   <header>
     <h1>Things I helped people with</h1>
-    <h2><i>Because I decided not to use them in my website for some reason</i></h2>
+    <h2>And some troubles some people are still going through</h2>
+    <hr />
   </header>
   <main>
     <p>I'm not quite sure why, but people have recently been coming to me for questions about HTML.</p>
     <p>I mean, I feel honoured and happy that people are choosing me, but I'm not sure why or how people concluded to choose me as their support rather than the internet.</p>
     <p>I would like to share what I've seen in these people's projects, so hopefully you can examine it and perhaps adapt your ways of teaching (<b>this is not personal</b>) slightly to accomodate to what these people did and didn't learn during your course.</p>
-    <!--
-      List:
-
-      - Inline fieldset
-      - Float: right fieldset
-      - Links
-      - Changing text colour
-      - Fancifying text
-      - Changing element colour
-      - How to properly make lists
-      - Making different list types
-      - Making inline lists
-      - Making proper radio buttons
-      - Radio names
-      - Borders
-      - Void and Non-Void tags
-      - Fancy elements
-      - General error checking
-      - INDENTATION
-    -->
 
     <h3>Fieldsets</h3>
 
-    <fieldset style="display: inline; float: left; margin: 0px;">
+    <fieldset style="display: inline;">
       <label>I've made an inline fieldset that changes its width according to your text's length.</label>
     </fieldset>
-    <fieldset style="display: inline; float: left; margin: 0px;">
+    <fieldset style="display: inline; float: right;">
       <label>As a result, I can also make fieldsets float alongside each other.</label>
     </fieldset><br /><br /><br />
 
@@ -88,11 +75,14 @@
     <br />
     <p>This is how you make <b>bold text</b>.</p>
     <p>This is how you make <i>italic text</i>.</p>
-    <p>You put these elements within dedicated text elements, but you should <b>never</b> put them by themselves.</p>
+    <p>This is how you make <u>underlined text</u>.</p>
+    <p>This is how you make <s>strikethrough text</s>.</p>
+    <p>This is how you make <mark style="background-color: skyblue;">highlighted text</mark>.</p>
+    <p>You put these elements within dedicated text elements, but you should <b>never</b> put them by themselves. I understand that you've made yourself clear when it comes to this, but I still see this quite often.</p>
     
     <h3>Changing element colour</h3>
     
-    <p>This has a similar but different process to changing text. Instead of "text-color" or "color", you use "background-color" or continue using "color".</p>
+    <p>This has a similar but different process to changing text. Instead of "color", you use "background-color".</p>
 
     <div id="divexample" style="background-color: blue; color: white; border: 2px solid black; padding: 5px;">
       <p>
@@ -102,7 +92,7 @@
     </div>
 
     <p>The example above shows how to make coloured elements, evidently.</p>
-    <p>Sorry -- this element is pretty vibrant, and takes your eyes away from what you're trying to read. If this is a problem for you, feel free to press the button below to toggle its visibility.</p>
+    <p>Sorry -- this element is pretty vibrant, and it takes your eyes away from what you're trying to read. If this is a problem for you, feel free to press the button below to toggle its visibility.</p>
     <button onclick="document.getElementById('divexample').hidden = !document.getElementById('divexample').hidden;">Toggle visibility</button><br />
 
     <h3>Making <u>proper</u> lists</h3>
@@ -125,8 +115,8 @@
       <li>Square item list</li>
       <li>Second item</li>
     </ul>
-    <ul style="list-style-type: disc;">
-      <li>Disc item list</li>
+    <ul style="list-style-type: circle;">
+      <li>Circle (not to be confused with disc) item list</li>
       <li>Second item</li>
     </ul>
     <ol style="list-style-type: upper-roman">
@@ -153,10 +143,122 @@
       </ul>
     </div>
 
+    <p>I've done this with the navigation header itself, simply without the centering.</p>
+
     <h3>Radio buttons</h3>
 
+    <p>I've only seen this problem twice, but it did confuse me too back when I was still learning HTML.</p>
+    <p><i>Radio elements must share the same name if they relate to each other!</i></p>
+    <p>I've seen radio elements that all had the same name, and radio elements that didn't have any names.</p>
+
+    <input type="radio" id="opt1-1" name="opt1" value="1" />
+    <label for="opt1-1">This is how radio buttons should act.</label><br />
+    <input type="radio" id="opt1-2" name="opt1" value="2" />
+    <label for="opt1-2">They should share the same name, while having different values.</label><br />
+    <input type="radio" id="opt1-3" name="opt1" value="3" />
+    <label for="opt1-3">Their related &lt;label&gt; tags' "for" parameter should share the same value as the input's ID.</label><br />
+
+    <br />
+
+    <input type="radio" id="opt2-1" name="opt1" value="1" />
+    <label for="opt2-1">This is what happens if you have radio buttons that are unrelated, while still sharing the same name as the previous field.</label><br />
+    <input type="radio" id="opt2-2" name="opt1" value="2" />
+    <label for="opt2-2">The previous field's value will suddenly be unselected when you select one here.</label><br />
+    <input type="radio" id="opt2-3" name="opt1" value="3" />
+    <label for="opt2-3">Always have separate names for individual  fields.</label><br />
     
+    <br />
+
+    <input type="radio" id="opt3-1" name="opt3-1" value="1" />
+    <label for="opt3-1">This is what happens when you have a different name for each value.</label><br />
+    <input type="radio" id="opt3-2" name="opt3-2" value="2" />
+    <label for="opt3-2">Each radio button will technically not relate with each other, therefore making all of them selectable.</label><br />
+    <input type="radio" id="opt3-3" name="opt3-3" value="3" />
+    <label for="opt3-3">Always have the same names within specific fields.</label><br />
     
+    <h3>Borders</h3>
+
+    <p>If you're used to them, borders are actually pretty easy to work with.</p>
+    <p>To apply a border to an element, you must give it a thickness, type, and colour. (e.g. 5px dotted black)</p>
+    <p>Here are some examples:</p>
+
+    <div style="text-align: center;">
+      <div class="borderdemo" style="border: 5px solid black">
+        <p>
+          This element has the CSS property of<br />
+          "border: 5px solid black".
+        </p>
+      </div>
+
+      <div class="borderdemo" style="border: 3px dotted blue;">
+        <p>
+          This element has the CSS property of<br />
+          "border: 3px dotted blue".
+        </p>
+      </div>
+
+      <div class="borderdemo" style="border: 15px dashed magenta;">
+        <p>
+          This element has the CSS property of<br />
+          "border: 15px dashed magenta".
+        </p>
+      </div>
+    </div>
+
+    <br />
+
+    <h3>Void and Non-Void tags</h3>
+
+    <p>I see the confusion about these two way too often.</p>
+    <p>Some people still cannot draw the line between these two types of elements.</p>
+    <p>I'll either see a missing closing tag for a non-void element, or I'll see one for a void element.</p>
+    <p>I personally knew the difference between these two types of elements, but I actually hadn't known that they had their respective terms.</p>
+    <p>Anyways, always close your non-void tags, and optionally include a closing symbol ("/") in your void elements.</p>
+
+    <table style="border: 2px solid black; text-align: center;">
+      <tr>
+        <th style="border: 2px dotted black">Non-void tags</th>
+        <th style="border: 2px dotted black">Void tags</th>
+      </tr>
+      <tr>
+        <td>&lt;p&gt;</td>
+        <td>&lt;br&gt;</td>
+      </tr>
+      <tr>
+        <td>&lt;a&gt;</td>
+        <td>&lt;hr&gt;</td>
+      </tr>
+      <tr>
+        <td>&lt;iframe&gt;</td>
+        <td>&lt;img&gt;</td>
+      </tr>
+    </table>
+
+    <h3>General error checking</h3>
+
+    <p>There are some students who definitely cannot recognize some errors within their code. And that's fine, for now at least. </p>
+    <p>Here is a list of things that students should review when cleaning up their code:</p>
+
+    <ol>
+      <li>Your non-void elements should have closing (and opening) tags.</li>
+      <li>Your void elements should have no closing tags.</li>
+      <li>Your code should follow proper indentation practices (<a href="./things-i-helped-with.html#indentation">below</a>).</li>
+      <li>You should use HTML entities (&amp;entity;) instead of pasting symbols.</li>
+      <li>Your commands should be spelled correctly.</li>
+    </ol>
+
+    <p>These are some basic things to keep track of. If these are reviewed frequently, you can subconciously aquire better programming habits by making sure you aren't creating these problems in the first place.</p>
+
+    <h3 id="indentation">Indentation</h3>
+
+    <p><b><i>Indentation!</i></b> I know it's not very important, but it shows how much you care about what you make! How much effort you're willing to put into your projects, how much you actually care about the user, how much you care about people reviewing your code &mdash; it's mostly psychological, and overall just good practice! If you're using a dedicated code editor (you are, it's called Visual Studio Code), then you barely need to worry about this. However, I still see people managing to fail at maintaining proper indentation! How? It's not even easy to get Visual Studio Code to accept inproper indentation!</p>
+    <p>Sorry. Since I'm self taught, I've always hated trying to search something up for ten days straight, then I find something, and it's incredibly painful to read.</p>
+    <p>GeeksForGeeks, for example. They don't always indent their code, and they sometimes even use their default dynamically-sized serif font to demonstrate their code. It's not super common, though.</p>
+
+    <hr />
+
+    <p>Please remember that this isn't meant at all to be personal. It's just a reminder on what some people aren't quite up-to-date about. This isn't really your fault, there is always a handful of people playing on CrazyGames or something similar, and it honestly dissapoints me. But that's probably just because I have a huge passion for this sort of thing. Whenever I see this, I don't really stop people, but I try to remind them that they still have work to do, if they still do actually have work to do.</p>
+    <p>I wish you luck with the rest of the semester. Teenagers can be very painful to deal with.</p>
   </main>
   <footer>
     <hr />
