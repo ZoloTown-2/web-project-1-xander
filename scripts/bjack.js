@@ -766,8 +766,6 @@ async function endgame() {
   }
   if (plyWinning > 21) {plyWinning = 0;}
   if (comCardTotal > 21) {comCardTotal = 0;}
-  console.log('PlyWinning: ' + plyWinning);
-  console.log('ComWinning: ' + comCardTotal);
   if (plyWinning > comCardTotal) {
     score += bet;
     plywins++;

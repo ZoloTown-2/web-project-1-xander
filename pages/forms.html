@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz - Xander's Website</title>
+    <script src="../scripts/hidenav.js"></script>
+    <link rel="stylesheet" href="../style/main.css" />
+    <link rel="stylesheet" href="../style/dark.css" />
+    <style>
+      body {
+        background-color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home Page</a></li>
+        <li><a href="./square.html">Click an agile Square</a></li>
+        <li><a href="./bjack.html">Black Jack</a></li>
+      </ul>
+      <ul>
+        <li>
+          <a href="./things-i-helped-with.html">Things I've helped with</a>
+        </li>
+        <li><a href="./oldstuff.html">Old computer stuff</a></li>
+        <li><a href="./forms.html">[Computer Quiz]</a></li>
+      </ul>
+      <button id="hidenav" onclick="hidenav();">^</button>
+      <hr />
+    </nav>
+    <header>
+      <h1>Computer Quiz</h1>
+      <h2>
+        A few basic questions that not everyone on the planet know the answer to
+      </h2>
+      <hr />
+    </header>
+    <main>
+      <form method="get">
+        <!--
+        1. Which component of the computer processes programming?
+        2. What is the component of the computer that stores temporary data for this component?
+        3. Which form factor isn't a form factor for a motherboard?
+        4. Select the option that doesn't support power transferring
+        5. Select the option that supports video transferring
+        6. How would you append to a file in Batch?
+        7. What does an HTML element typically look like?
+        8. How would you call a method in Lua?
+        9. Which Java snippet is invalid?
+        10. What are the two main methods for a promise in JavaScript?
+      -->
+        <p>1. Which component of the computer processes programming?</p>
+        <label for="q1">Your answer: </label>
+        <input type="text" id="q1" />
+        <hr />
+        <p>
+          2. What is the component of the computer that stores temporary data
+          for this component?
+        </p>
+        <label for="q2">Your answer: </label>
+        <select id="q2">
+          <option value="incorrect">Motherboard</option>
+          <option value="incorrect">PSU</option>
+          <option value="incorrect">Case</option>
+          <option value="incorrect">CPU</option>
+          <option value="correct">RAM</option>
+          <option value="incorrect">PCIe Card</option>
+          <option value="incorrect">I/O Device</option>
+        </select>
+        <hr />
+        <p>3. Which form factor isn't a form factor of the motherboard?</p>
+        <input type="radio" id="q3a1" name="q3" value="incorrect" />
+        <label for="q3a1">ATX</label>
+        <br />
+        <input type="radio" id="q3a2" name="q3" value="incorrect" />
+        <label for="q3a2">ITX</label>
+        <br />
+        <input type="radio" id="q3a3" name="q3" value="correct" />
+        <label for="q3a3">UTX</label>
+        <br />
+        <input type="radio" id="q3a4" name="q3" value="incorrect" />
+        <label for="q3a4">eATX</label>
+        <br />
+        <input type="radio" id="q3a5" name="q3" value="incorrect" />
+        <label for="q3a5">Micro-ATX</label>
+        <hr />
+        <p>4. Select the options that support power transferring.</p>
+        <input type="checkbox" id="q4a1" name="q4" value="incorrect" />
+        <label for="q4a1">PS/2</label>
+        <br />
+        <input type="checkbox" id="q4a2" name="q4" value="correct" />
+        <label>USB Type-A</label>
+        <br />
+        <input type="checkbox" id="q4a3" name="q4" value="correct" />
+        <label for="q4a3">USB Type-C</label>
+        <br />
+        <input type="checkbox" id="q4a4" name="q4" value="incorrect" />
+        <label for="q4a4">HDMI</label>
+        <hr />
+        <p>5. Select the option that supports video.</p>
+        <input type="radio" id="q5a1" name="q5" value="incorrect" />
+        <label for="q5a1">USB Type-A</label>
+        <br />
+        <input type="radio" id="q5a2" name="q5" value="incorrect" />
+        <label for="q5a2">USB Type-B</label>
+        <br />
+        <input type="radio" id="q5a3" name="q5" value="incorrect" />
+        <label for="q5a3">USB Type-C</label>
+        <br />
+        <input type="radio" id="q5a4" name="q5" value="correct" />
+        <label for="q5a4">Thunderbolt 3/4/5</label>
+        <hr />
+        <p>
+          6. How many "&gt;" symbols are required to <i>append</i> to a file in
+          batch?
+        </p>
+        <label for="q6">Your answer: </label>
+        <input type="number" id="q6" min="1" max="3" />
+        <hr />
+        <p>7. What does a non-void HTML element typically look like?</p>
+        <label for="q7">Your answer: </label>
+        <select id="q7">
+          <option>&lt;element&gt;</option>
+          <option>&lt;element /&gt;</option>
+          <option>&lt;element&gt;Content&lt;element&gt;</option>
+          <option>&lt;element&gt;Content&lt;/element&gt;</option>
+          <option>&lt;/element&gt;</option>
+        </select>
+        <hr />
+        <p>8. How would you call a method in Lua?</p>
+        <input type="radio" id="q8a1" name="q8" value="incorrect" />
+        <label for="q8a1">temp.Call();</label>
+        <br />
+        <input type="radio" id="q8a2" name="q8" value="correct" />
+        <label for="q8a2">temp:Call();</label>
+        <hr />
+        <p>9. Select the invalid Java snippets.</p>
+        <input type="checkbox" id="q9a1" name="q9" value="correct" />
+        <label for="q9a1">frame:refresh();</label>
+        <br />
+        <input type="checkbox" id="q9a2" name="q9" value="incorrect" />
+        <label for="q9a2">temp = x > 5 ? 1 : 0;</label>
+        <br />
+        <input type="checkbox" id="q9a3" name="q9" value="incorrect" />
+        <label for="q9a3"
+          >if (boolVal)<br />System.out.println("Hello, world!");</label
+        >
+        <br />
+        <input type="checkbox" id="q9a4" name="q9" value="correct" />
+        <label for="q9a4">boolean val = 5;</label>
+        <br />
+        <input type="checkbox" id="q9a5" name="q9" value="incorrect" />
+        <label for="q9a5">var val = 5;</label>
+        <hr />
+        <p>
+          10. What are the two main methods of a Promise in JavaScript? (include
+          the ".", don't pass any values, and don't include ";".)
+        </p>
+        <label for="q10a1">Your first answer: </label>
+        <input type="text" id="q10a1" /><br />
+        <label for="q10a2">Your second answer: </label>
+        <input type="text" id="q10a2" />
+        <hr />
+        <input type="submit" />
+        <p>
+          Press "Submit" and check the link for any "incorrect"s.<br />
+          Not all answers will appear in the link. (Only 3, 4, 5, 6, and 8)
+        </p>
+        <br /><br /><br /><br />
+        <input type="reset" />
+      </form>
+    </main>
+    <footer>
+      <a href="../index.html">Back to the homepage...</a>
+    </footer>
+  </body>
+</html>

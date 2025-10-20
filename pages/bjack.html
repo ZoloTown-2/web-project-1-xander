@@ -1,78 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Black Jack - Xander's Website</title>
-  <script src="../scripts/hidenav.js"></script>
-  <script src="../scripts/bjack.js"></script>
-  <link rel="stylesheet" href="../style/main.css" />
-  <link rel="stylesheet" href="../style/dark.css" />
-  <link rel="stylesheet" href="../style/bjack.css" />
-</head>
-<body>
-  <nav>
-    <ul>
-      <li><a href="../index.html">Home Page</a></li>
-      <li><a href="./square.html">Click an agile square</a></li>
-      <li><a href="./bjack.html">[Black Jack]</a></li>
-    </ul>
-    <ul>
-      <li><a href="./things-i-helped-with.html">Things I've helped with</a></li>
-      <li><a href="./oldstuff.html">Old computer stuff</a></li>
-    </ul>
-    <button id="hidenav" onclick="hidenav();">^</button>
-    <hr />
-  </nav>
-  <header>
-    <h1>Black Jack</h1>
-    <h2>Let this game teach you why you shouldn't gamble</h2>
-    <hr />
-  </header>
-  <main>
-    <fieldset> 
-      <legend id="comlegend">Dealer</legend>
-      <section id="comcards"></section>
-    </fieldset>
-    <fieldset>
-      <legend id="plylegend">Player</legend>
-      <section id="plycards"></section>
-    </fieldset>
-    <div id="plysplit" hidden>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Black Jack - Xander's Website</title>
+    <script src="../scripts/hidenav.js"></script>
+    <script src="../scripts/bjack.js"></script>
+    <link rel="stylesheet" href="../style/main.css" />
+    <link rel="stylesheet" href="../style/dark.css" />
+    <link rel="stylesheet" href="../style/bjack.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home Page</a></li>
+        <li><a href="./square.html">Click an agile square</a></li>
+        <li><a href="./bjack.html">[Black Jack]</a></li>
+      </ul>
+      <ul>
+        <li><a href="./things-i-helped-with.html">Things I've helped with</a></li>
+        <li><a href="./oldstuff.html">Old computer stuff</a></li>
+        <li><a href="./forms.html">Computer Quiz</a></li>
+      </ul>
+      <button id="hidenav" onclick="hidenav();">^</button>
+      <hr />
+    </nav>
+    <header>
+      <h1>Black Jack</h1>
+      <h2>Let this game teach you why you shouldn't gamble</h2>
+      <hr />
+    </header>
+    <main>
       <fieldset>
-        <legend id="pslegend">Player's Split</legend>
-        <section id="pscards"></section>
+        <legend id="comlegend">Dealer</legend>
+        <section id="comcards"></section>
       </fieldset>
-    </div>
-    <hr />
-    <section id="deck">
-      <div id="barback">
-        <div id="barfront"></div>
+      <fieldset>
+        <legend id="plylegend">Player</legend>
+        <section id="plycards"></section>
+      </fieldset>
+      <div id="plysplit" hidden>
+        <fieldset>
+          <legend id="pslegend">Player's Split</legend>
+          <section id="pscards"></section>
+        </fieldset>
       </div>
-    </section>
-    <label id="narrator">Press "Deal" to begin.</label>
-    <hr />
-    <section id="controls">
-      <label id="count">Count: 0</label>
-      <br />
-      <label id="score">Score: 0 points</label>
-      <br />
-      <label id="wins">Wins: 0 - 0</label>
-      <br />
-      <button id="betdown" onclick="betdown();">-</button>
-      <label id="bet">Bet: 10 points</label>
-      <button id="betup" onclick="betup();">+</button>
-      <br />
-      <button id="deal" onclick="deal();">Deal</button>
-      <button id="hit" onclick="hit();" disabled>Hit</button>
-      <button id="stay" onclick="stay();" disabled>Stay</button>
-      <button id="double" onclick="double();" disabled>Double</button>
-      <button id="split" onclick="split();" disabled>Split</button>
-    </section>
-  </main>
-  <footer>
-    <hr />
-    <a href="../index.html">Back to the homepage...</a>
-  </footer>
-</body>
+      <hr />
+      <section id="deck">
+        <div id="barback">
+          <div id="barfront"></div>
+        </div>
+      </section>
+      <label id="narrator">Press "Deal" to begin.</label>
+      <hr />
+      <section id="controls">
+        <label id="count">Count: 0</label>
+        <br />
+        <label id="score">Score: 0 points</label>
+        <br />
+        <label id="wins">Wins: 0 - 0</label>
+        <br />
+        <button id="betdown" onclick="betdown();">-</button>
+        <label id="bet">Bet: 10 points</label>
+        <button id="betup" onclick="betup();">+</button>
+        <br />
+        <button id="deal" onclick="deal();">Deal</button>
+        <button id="hit" onclick="hit();" disabled>Hit</button>
+        <button id="stay" onclick="stay();" disabled>Stay</button>
+        <button id="double" onclick="double();" disabled>Double</button>
+        <button id="split" onclick="split();" disabled>Split</button>
+      </section>
+    </main>
+    <footer>
+      <hr />
+      <a href="../index.html">Back to the homepage...</a>
+    </footer>
+  </body>
 </html>
